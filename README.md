@@ -16,12 +16,12 @@ and also track their attendance.
 ##More to dos
 After creating a meeting the cordinator would be able to invite the members to supplier their personal details by themselves
 
-Once they submit the details they will be added to the meeting participants on the app.
+Once they submit their details they will be added to the meeting participants on the app.
 
 When a cordinator opens the app, he can only see the members or partcipants in the group he has authored.
 
 There is a summary page, at the moment, that the cordinators can view details of members attending their meetings and even do some 
 anlytics on the participants in the meeting.
 
-Once they recieve your invitation, they will be able to provide enough details about themselves that will directly go into 
-your database.
+And more...features to come.
+
