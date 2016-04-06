@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+.programstable thead tr th, .programstable tbody tr th {
+	background-color: #184D8C;
+	border: 1px solid black;
+	font-size: 14px;
+	padding: 8px;
+    border-collapse: collapse
+}
+.programstable tbody td {
+	color: #3D3D3D;
+	padding: 4px;
+	background-color: #FFF;
+	vertical-align: top;
+}
+.programstable th {height:20px}
+.btn-group-lg > .btn, .btn-lg {
+    padding: 8px;
+    font-size: 14px;
+    line-height: 1.33333;
+}
+
+button {background-color:#008CBA;border:solid 1px; color:white; padding:5px; float:right;border-radius: 2px; height:2.5em}
+.btn {display: inline-block; border-radius: 4px;background-color: #008CBA; border: none;color: #FFFFFF;text-align: center;font-size: 15px;
+  padding: 8px;transition: all 0.5s;cursor: pointer; float:left}
+  .headtext {font-size: 16px; font-weight: 800; color: #0E2754}
+	button, input, optgroup, select, textarea {
+    margin: 10px;
+    font: inherit;
+    color: inh
+</style>
+<script>
+	function Hide(target){
+		document.getElementById(target).style.display= "none";
+	}
+	
+	function Show(target){
+		document.getElementById(target).style.display= "block";
+	}
+  function validateDate() {
+	var msg = "date format must be dd-mm-yyyy";
+	var t = document.getElementById('duedate').value;
+	
+	var lastfour = t.slice(6,10).length;
+	var firsttwo = t.slice(0,2).length;
+	var midtwo = t.slice(3,5).length;
+	var firstdash = t[2];
+	var seconddash = t[5];
+	var month = t.slice(3,5);
+	if (parseInt(month) > 12 | isNaN(parseInt(month))) {
+		alert(msg)
+		return false;	
+	}
+	
+	if (firstdash != '-' | seconddash != '-'){
+		alert(msg)
+		return false;	
+	}
+	else if (lastfour != 4 | firsttwo != 2 | midtwo!= 2) {
+		alert(msg)
+		return false
+	}
+		document.getElementById('form1').submit();
+		return true
+}
+</script>
+
+
+
+
+<div ><br>
+<div class="table-responsive" > 
+  <table class="table table-condensed table-bordered programstable" ><span style='font-size: 16px; font-weight: 800; color: #0E2754'>Program Details</span><br><br>
+  <a href="#form1" onclick="Show('form1')" class="btn btn-info btn-lg bt2" style='float:right; width:'180px'>
+          <span class="glyphicon glyphicon-plus-sign" ></span>Add Task
+        </a>
+    <thead>
+      <tr>
+        <th >Program Name</th>
+        <th >Aim/Objective</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{sprog.progname}}</td>
+        <td >{{sprog.progdesc}}</a></td>
+      </tr>
+    </tbody>
+  </table>
+  </div 
+</div><br>
+
+
+
+ <div class="table-responsive" >
+
+  <table class="table table-hover table-bordered programstable"><strong><span style='font-size: 16px; font-weight: 500; color: #0E2754'>Task List</span></strong><br><br>
+    <thead>
+      <tr>
+        <th>Date Entered</th>
+        <th>Task</th>
+        <th>Status</th>
+		<th>Assigned To</th>
+        <th>Due Date</th>
+        <th></th>
+		<th></th>
+      </tr>
+    </thead>
+    <tbody>
+	{%for tsk in task%}
+      <tr>
+        <td>{{tsk.taskdate | dateformat("%d-%m-%Y") }}</td>
+        <td>{{tsk.taskname}}</td>
+		{%if tsk.taskstatus == 'Inprogress' %}
+        <td>{{tsk.taskstatus}}: {{tsk.taskcomment}}</td>
+		{%else %}
+		<td>{{tsk.taskstatus}}</td>
+		{% endif%}
+        <td>{{tsk.taskdoer.name}}</td>
+		<td>{{tsk.duedate | dateformat("%d-%m-%Y")}}</a></td>
+        <td> <a href='#' onclick="alert('oops! not yet implemented')"><span class="glyphicon glyphicon-pencil"></span></a></td>
+		<td><a href='#' onclick="alert('OOPs! not yet implemented')"><span class="glyphicon glyphicon-trash"></span></a></td>
+      </tr>
+	{%endfor %}
+    </tbody>
+  </table>
+  </div <br><br><br>
+
+<div>
+<form role="form" method="POST" id='form1' style='display:none;padding-left:10%;padding-right:10%' onsubmit="validateDate(); return false">
+    <div class="form-group">
+        <label class='headtext'>Add Task</label>
+        <input type="text" class="form-control" id="taskname" name="taskname" placeholder="Task Name" required='required'>
+    </div>
+	<div class="form-group">
+       <label for="taskstatus" style='padding-right:10px'>Task Status:</label>
+      <label class="radio-inline">
+      <input type="radio" name="taskstatus" id='notdone' onchange="Hide('taskstatusdiv')" value='Undone'>Not Done
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="taskstatus" id='progress' onchange="Show('taskstatusdiv')" value='Inprogress'>In Progress
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="taskstatus" id='complete' onchange="Hide('taskstatusdiv')" value='Complete'>Complete
+    </label>
+    </div>
+    <div class="form-group" id='taskstatusdiv' style='display:none'>
+		<input type="text" class="form-control" id="taskcomment" name="taskcomment" placeholder="Comment on task if in progress">
+    </div>
+	<div class="form-group">
+       <input type="date" class="form-control" id="duedate" name="duedate" placeholder="Due Date (DD-MM-YYYY)" required='required'>
+    </div>
+	
+	<div class="form-group">
+      <label for="sel1">Assign task to member:</label>
+     
+	  <select class="form-control" id="sel1" name='taskdoer' required='required'>
+		{% for u in users %}
+        <option value='{{ u.id}}'>{{u.name}}</option>
+		{% endfor%}
+      </select>
+	  
+      <br>
+    </div>
+    <button class="btn btn-default">Submit</button><span>&nbsp; &nbsp</span>
+    <button class="btn btn-default" style='background-color: red;'  onclick="Hide('form1')">Hide</button>
+</form>
+<br><br><br>
+</div>
+{% endblock %}

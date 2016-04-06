@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+.programstable thead tr th, .programstable tbody tr th {
+	background-color: #184D8C;
+	border: 1px solid black;
+	font-size: 14px;
+	padding: 8px;
+    border-collapse: collapse
+}
+.programstable tbody td {
+	color: #3D3D3D;
+	padding: 4px;
+	background-color: #FFF;
+	vertical-align: top;
+}
+.programstable th {height:20px}
+.btn-group-lg > .btn, .btn-lg {
+    padding: 8px;
+    font-size: 14px;
+    line-height: 1.33333;
+}
+
+button {background-color:#008CBA;border:solid 1px; color:white; padding:5px; float:right;border-radius: 2px; height:2.5em}
+.btn {display: inline-block; border-radius: 4px;background-color: #008CBA; border: none;color: #FFFFFF;text-align: center;font-size: 15px;
+  padding: 8px;transition: all 0.5s;cursor: pointer; float:left}
+  .headtext {font-size: 16px; font-weight: 800; color: #0E2754}
+	button, input, optgroup, select, textarea {
+    margin: 10px;
+    font: inherit;
+    color: inh }
+	
+.attendbox { width:5%}
+
+.centertext {style='text-align:center'}
+</style>
+<script>
+	function Hide(target){
+		document.getElementById(target).style.display= "none";
+	}
+	
+	function Show(target){
+		document.getElementById(target).style.display= "block";
+	}
+  function goBack() {
+	window.history.back()
+  }
+</script>
+
+<div class='element2'><br>
+<div class="table-responsive">
+<form role="form" method="POST" id='form1'>
+	<p><a href="{{url_for('cellreport', id=cellid)}}">
+          <span class="glyphicon glyphicon-menu-left">Back</span>
+        </a></p>
+  <table class="table table-hover table-bordered programstable"><strong><span style='font-size: 16px; font-weight: 800; color: #0E2754'>Edit Attendance of: {{mem.memb_name}}.</span></strong><br>
+    <thead>
+      <tr style='text-align:center'>
+        <th>Name</th>
+        <th class='attendbox' style='text-align:center'>Wk1</th>
+        <th class='attendbox' style='text-align:center'>Wk2</th>
+		<th class='attendbox' style='text-align:center'>Wk3</th>
+        <th class='attendbox' style='text-align:center'>Wk4</th>
+        <th class='attendbox' style='text-align:center'>Wk5</th>
+		<th >Details if absent from meeting</th>
+		<th class='attendbox'>{{mem.memb_wk1 == 'N' and 'selected' or ''}}</th>
+		<th class='attendbox'></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+		<td >{{mem.memb_name}}</td>
+        <td  style='text-align:center'>
+	  <select id="sel1" name='memb_wk1' >
+        <option value='NM' {{mem.memb_wk1 == 'NM' and 'selected' or ''}}>NM</option>
+		 <option value='N' {{mem.memb_wk1 == 'N' and 'selected' or ''}}>N</option>
+		 <option value='Y' {{mem.memb_wk1 == 'Y' and 'selected' or ''}}>Y</option>
+      </select>
+      </td>
+	  <td style='text-align:center'>
+	  <select id="sel2" name='memb_wk2' >
+        <option value='NM' {{mem.memb_wk2 == 'NM' and 'selected' or ''}}>NM</option>
+		 <option value='N' {{mem.memb_wk2 == 'N' and 'selected' or ''}}>N</option>
+		 <option value='Y' {{mem.memb_wk2 == 'Y' and 'selected' or ''}}>Y</option>
+      </select>
+      </td>
+        
+		<td style='text-align:center'>
+	   <select id="sel3" name='memb_wk3' style='text-align:center'>
+        <option value='NM' {{mem.memb_wk3 == 'NM' and 'selected' or ''}}>NM</option>
+		 <option value='N' {{mem.memb_wk3 == 'N' and 'selected' or ''}}>N</option>
+		 <option value='Y' {{mem.memb_wk3 == 'Y' and 'selected' or ''}}>Y</option>
+      </select>
+      </td>
+		
+		<td style='text-align:center'>
+	   <select id="sel4" name='memb_wk4' style='text-align:center'>
+        <option value='NM' {{mem.memb_wk4 == 'NM' and 'selected' or ''}}>NM</option>
+		 <option value='N' {{mem.memb_wk4 == 'N' and 'selected' or ''}}>N</option>
+		 <option value='Y' {{mem.memb_wk4 == 'Y' and 'selected' or ''}}>Y</option>
+      </select>
+      </td>
+		
+		<td style='text-align:center'>
+	   <select id="sel5" name='memb_wk5' style='text-align:center'>
+        <option value='NM' {{mem.memb_wk5 == 'NC' and 'selected' or ''}}>NM</option>
+		 <option value='N' {{mem.memb_wk5 == 'N' and 'selected' or ''}}>N</option>
+		 <option value='Y' {{mem.memb_wk5 == 'Y' and 'selected' or ''}}>Y</option>
+      </select>
+      </td>
+		<td><div class="form-group col-md-10"> <input type='text' name="memb_comment" class="form-control" style='min-width:200px' value="{{mem.memb_follow == 'Undone' and '' or mem.memb_comment}}" </div></td>
+        <td> <button class="btn btn-default">Submit</button> </td>
+		<td><input type="button" class="btn btn-default" value="Go-Back" style='background-color: red;' onclick="goBack()"></td>
+      </tr>
+    </tbody>
+  </table>
+</form>
+<br><br><br>
+</div>
+
+
+ 
+{% endblock %}

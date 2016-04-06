@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>A-Marker</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/mains.css') }}">
+   <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+  <style>
+   #navheaderbar {background-color: #2A6496; color:white; font-weight:bold; font-size:18px;border-style:solid}
+   .navbar-inverse .navbar-brand   {color: #FFFFFF; font-size: 16px}
+   .navbar-inverse .navbar-nav > li > a { color: #FFFFFF;font-size: 16px}
+   .h1, h1 {font-size: 20px; font-weight:bold}
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse" id='navheaderbar'>
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand active" href="{{url_for('cells')}}">A-Marker &nbsp<span class="glyphicon glyphicon-home"></span></a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Group Summary</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"></span> Admin</a></li>
+        <li><a href="{{url_for('logout')}}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+{% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+       <div class="alert alert-{{ category }}">
+       {{ message }}
+       </div>
+       {% endfor %}
+       {% endif %}
+       {% endwith %}  
+<div class="container-fluid" style='border: solid 5px #BDBBBB; border-radius: 5px;'>
+            {% block content %}{% endblock %}
+            <br><br>
+            
+</div>
+
+</body>
+</html>

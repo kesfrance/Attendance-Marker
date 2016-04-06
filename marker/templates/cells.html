@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+.programstable thead tr th, .programstable tbody tr th {
+	background-color: #184D8C;
+	border: 1px solid black;
+	font-size: 14px;
+	padding: 8px;
+    border-collapse: collapse
+}
+.programstable tbody td {
+	color: #3D3D3D;
+	padding: 4px;
+	background-color: #FFF;
+	vertical-align: top;
+}
+.programstable th {height:20px}
+
+button {background-color:#008CBA;border:solid 1px; color:white; padding:5px; float:right;border-radius: 2px; height:2.5em}
+.btn {display: inline-block; border-radius: 4px;background-color: #008CBA; border: none;color: #FFFFFF;text-align: center;font-size: 13px;
+  padding: 8px;transition: all 0.5s;cursor: pointer; float:left}
+  .headtext {font-size: 14px; font-weight: 800; color: #0E2754}
+	button, input, optgroup, select, textarea {
+    margin: 10px;
+    font: inherit;
+    color: inherit;padding:1px;
+}
+</style>
+<script>
+	function Hide(target){
+		document.getElementById(target).style.display= "none";
+	}
+	
+	function Show(target){
+		document.getElementById(target).style.display= "block";
+	}
+	function deleteItem(val, valid){
+		var ans = confirm('Sure You Deleting '+ val);
+		if (ans) {
+			document.getElementById('deleteitem').value = valid;
+			document.getElementById('form2').submit();
+		}
+	}
+</script>
+
+  
+ <div class="table-responsive" > 
+  <table class="table table-hover table-bordered programstable"><span class='headtext'><b>Current Groups</b></span>
+ 
+  <a href="#form1" onclick="Show('form1')" class="btn btn-info btn-lg bt2" style='float:right; width:'180px'>
+          <span class="glyphicon glyphicon-plus-sign" ></span>Add-Group
+        </a>
+    <thead>
+      <tr style='text-align:center'>
+        <th>Group Name</th>
+        <th>Group Coordinator</th>
+		<th>Group Decsription</th>
+		<th>Group Details</th>
+		<th></th>
+		<th></th>
+      </tr>
+    </thead>
+    <tbody>
+	{% for c in cells%}	
+      <tr >
+        <td>{{c.cellname}} {{c.author_id}}</td>
+        <td>{{c.cellleader}}</td>
+		<td width='50%'>{{c.celldescrip}}</td>
+		<td><a href="{{url_for('cellreport', id=c.id)}}">Group Details</a></td>
+	{% if current_user.email == admin.email %}  
+		<td> <a href='#' onclick="confirm('Edit '+'{{c.cellname}}')"><span class="glyphicon glyphicon-pencil"></span></a></td>
+		<td><a href='#' onclick="deleteItem('{{c.cellname}}','{{c.id}}' )"><span class="glyphicon glyphicon-trash"></span></a></td>
+	{% else %}
+		<td> <a href='#' onclick="alert('Not authorised')"><span class="glyphicon glyphicon-pencil"></span></a></td>
+		<td><a href='#' onclick="alert('Not authorised')"><span class="glyphicon glyphicon-trash"></span></a></td
+	{% endif%}
+      </tr>
+	{%endfor %} 
+    </tbody>
+  </table>
+  </div 
+<br>
+<div style='padding:10%'>
+<form role="form" method="POST" id='form1' style='display:none'>
+    <div class="form-group">
+        <label class='headtext'>Create New Group</label>
+        <input type="text" class="form-control" id="progname" name="cellname" placeholder="Group Name">
+    </div>
+    <div class="form-group">
+        <input type='text' class="form-control" id="progdesc" name="celldescrip" placeholder="Group Description">
+    </div>
+    <div class="form-group">
+        <input type='text' class="form-control" id="progdesc" name="cellleader" placeholder="Group Coordinator" >
+    </div>
+    <button class="btn btn-default">Submit</button><span>&nbsp; &nbsp</span>
+    <button class="btn btn-default" style='background-color: red;'  onclick="Hide('form1'); return false">Hide</button>
+</form>
+<br><br><br>
+
+<form role="form" method="POST" action='/delcell' id='form2'>
+        <input type="hidden" value='' class="form-control" id="deleteitem" name="deleteitem">
+ </form>
+</div>
+{% endblock %}
+

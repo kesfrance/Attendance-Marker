@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+.programstable thead tr th, .programstable tbody tr th {
+	background-color: #184D8C;
+	border: 1px solid black;
+	font-size: 14px;
+	padding: 8px;
+    border-collapse: collapse
+}
+.programstable tbody td {
+	color: #3D3D3D;
+	padding: 4px;
+	background-color: #FFF;
+	vertical-align: top;
+}
+.programstable th {height:20px}
+.btn-group-lg > .btn, .btn-lg {
+    padding: 8px;
+    font-size: 14px;
+    line-height: 1.33333;
+}
+
+button {background-color:#008CBA;border:solid 1px; color:white; padding:5px; float:right;border-radius: 2px; height:2.5em}
+.btn {display: inline-block; border-radius: 4px;background-color: #008CBA; border: none;color: #FFFFFF;text-align: center;font-size: 15px;
+  padding: 8px;transition: all 0.5s;cursor: pointer; float:left}
+  .headtext {font-size: 16px; font-weight: 800; color: #0E2754}
+	button, input, optgroup, select, textarea {
+    margin: 10px;
+    font: inherit;
+    color: inh }
+	
+.attendbox { width:5%}	
+</style>
+<script>
+	function Hide(target){
+		document.getElementById(target).style.display= "none";
+	}
+	
+	function Show(target){
+		document.getElementById(target).style.display= "block";
+	}
+  
+</script>
+<div class='element2'><br>
+<div class="table-responsive">
+
+  <table class="table table-hover table-bordered programstable"><strong><span style='font-size: 16px; font-weight: 800; color: #0E2754'>Participants List</span></strong>
+ <a href="#form1" onclick="Show('form1')" class="btn btn-info btn-lg bt2" style='float:right; width:'180px'>
+          <span class="glyphicon glyphicon-plus-sign" ></span>Add-New 
+        </a>
+    <thead>
+      <tr>
+        <th width='20%'>Name</th>
+        <th class='attendbox'>Wk1</th>
+        <th class='attendbox'>Wk2</th>
+		<th class='attendbox'>Wk3</th>
+        <th class='attendbox'>Wk4</th>
+        <th class='attendbox'>Wk5</th>
+		<th >Details if absent from meeting</th>
+		<th class='attendbox'></th>
+		<th class='attendbox'></th>
+      </tr>
+    </thead>
+    <tbody>
+	{% for mem in member %}
+      <tr>
+        <td><a href="{{url_for('singlemembreport', id=mem.id)}}">{{mem.memb_name }}</a></td>
+        <td >{{mem.memb_wk1}}</td>
+        <td>{{mem.memb_wk2}}</td>
+		<td>{{mem.memb_wk3}}</td>
+        <td>{{mem.memb_wk4}}</td>
+		<td>{{mem.memb_wk5}}</td>
+		<td>{{mem.memb_follow == 'Undone' and "" or mem.memb_comment}}</td>
+        <td> <a href='{{url_for('singlemembreport', id=mem.id)}}'><span class="glyphicon glyphicon-pencil"></span></a></td>
+		<td><a href='#' onclick="alert('OOPs! Try editing instead')"><span class="glyphicon glyphicon-trash"></span></a></td>
+      </tr>
+	{% endfor %}
+    </tbody>
+  </table>
+  </div
+<div><br><br>
+<form role="form" method="POST" id='form1' style='display:none; padding-left:15%'>
+    <div class="form-group col-md-8">
+        <label class='headtext'>Add New Member</label>
+        <input type="text" class="form-control" id="name" name="memb_name" placeholder="Full Name" required='required'>
+    </div>
+	<div class="form-group col-md-8">
+        <input type="text" class="form-control" id="number" name="memb_contact" placeholder="Contact Number" required='required'>
+    </div>
+	<div class="form-group col-md-8">
+        <input type="text" class="form-control" id="email" name="memb_email" placeholder="Email" required='required'>
+    </div>
+	<div class="form-group col-md-8">
+        <input type="text" class="form-control" id="address" name="memb_address" placeholder="Residential Address" required='required'>
+    </div>
+	<div class="form-group col-md-8">
+       <label for="taskstatus" style='padding-right:10px'>Special Comment:</label>
+      <label class="radio-inline">
+      <input type="radio" name="memb_follow" id='notdone' onchange="Hide('taskstatusdiv')" value='Undone'>Not Yet
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="memb_follow" id='progress' onchange="Show('taskstatusdiv')" value='Inprogress'>Yes
+    </label>
+    </div>
+    <div class="form-group col-md-8" id='taskstatusdiv' style='display:none'>
+		<input type="text" class="form-control" id="comment" name="memb_comment" placeholder="Comment for group Cordinator's attention">
+    </div>
+	<div class="form-group col-md-8">
+      <label for="sel1">Select Your Cell:</label>
+	<select class="form-control col-md-8" id="sel1" name='cellid' required='required'>
+		{% for c in cells %}
+        <option value='{{ c.id}}' {{ c.id == cell.id and 'selected' or 'disabled'}}>{{c.cellname}}</option>
+		{% endfor%}
+      </select>
+	</div><br>
+	<div class="form-group col-md-8">
+    <button class="btn btn-default">Submit</button><span>&nbsp; &nbsp</span>
+    <button class="btn btn-default" style='background-color: red;'  onclick="Hide('form1')">Hide</button>
+	</div>
+</form>
+<br><br><br>
+</div>
+
+
+ 
+{% endblock %}
