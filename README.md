@@ -1,6 +1,8 @@
 # Smart-Marker
 A web application for registering participants at events and monitoring their attendance.
 
+I used Python, Flask, Javascript, Bootstrap, HTML, CSS, SQLalchemy and SQLlite. I intend to us Mongodb for the next stage of the app.
+ 
 The first stage of this app. I am building a utility in which you can create meetings, invite people to participate in a meeting, 
 and also track their attendance. 
 
