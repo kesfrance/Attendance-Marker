@@ -1,7 +1,7 @@
 # Smart-Marker
-A web application for registering participants at events and monitoring their attendance.
+A web application for registering participants at events, marking their attendance, and creating meeting reports.
 
-The first stage of this app. I am building a utility in which you can create meetings, invite people to participate in a meeting, and also track their attendance. 
+This is the first stage of this app. I am building a utility in which people can create meetings, invite people to participate in the meeting, track their attendance, do some analytics on meeting participants and create report. 
 
 I used Python, Flask, Javascript, Bootstrap, HTML, CSS, SQLalchemy and SQLlite. I intend to us Mongodb for the next stage of the app.
 
@@ -9,8 +9,8 @@ I used Python, Flask, Javascript, Bootstrap, HTML, CSS, SQLalchemy and SQLlite. 
 <ul>
  <li>User sign up and create a meeting group on the platform</li>
  <li>User can then add members to the meeting group he has created. The program allows you to collect vital personal details from the participants</li>
- <li>Then the meeting cordinator, can then mark each participants meeting attendance. At the moment, on weekly basis.</li>
- <li>The program gives you a column to add comments for an absent participant</li>
+ <li>Then the meeting coordinator, can then mark each participants meeting attendance. At the moment, on weekly basis.</li>
+ <li>The program gives you a column to add comments on an absent participant, or just any general comment on a participant </li>
  
 </ul>
 
