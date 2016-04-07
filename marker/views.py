@@ -117,7 +117,7 @@ def add_post_get():
     return render_template("add_post.html")
 
 
-@app.route("/getsignup", methods=["GET"])
+@app.route("/signup", methods=["GET"])
 def signup_get():
     return render_template("signup.html")
 
